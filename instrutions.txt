@@ -1,2 +1,0 @@
-Use the Raylib installer for windows and compile this with The Raylib notepad 
-Make sure to put the sprites folder in the same dir as the executable or else it will flash lights 
