@@ -1,6 +1,9 @@
 #include "player.h"
 #include "map.h"
 #include "crystal.h"
+
+
+
 static void GameInit(){
     map.id = 1;
     Player.x = 100;
@@ -13,3 +16,8 @@ static void GameInit(){
     Player.score = 0;
 }
 
+static void ResetGameState(){
+    Player.score = 0;
+    crystal.x = 500;
+    map.id = 1;
+}

@@ -2,9 +2,10 @@ typedef struct player{
     int x;
     int y;
     int jumpcount;
-    int IsJumping;
+    bool IsJumping;
     int score;
 }player;
+
 
 static player Player;
 static player HomePlayer;
@@ -15,6 +16,13 @@ int MovePlayer(int PlayerX){
 
 int TriggerJumpAt(int XValue){
     if (HomePlayer.x == XValue){
-        Player.IsJumping = 1;
+        Player.IsJumping = true;
     }
 } 
+
+static void MoveHomePlayer(){
+    HomePlayer.x += 2;
+}
+static void ResetHomePlayerState(){
+    HomePlayer.x = 500;
+}

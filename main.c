@@ -25,9 +25,10 @@ int main(void)
                 DrawTexture(player_main,HomePlayer.x,HomePlayer.y,WHITE);
                 TriggerJumpAt(190);
                 TriggerJumpAt(410);
-                HomePlayer.x += 2;
+                MoveHomePlayer();
 
-                if (Player.IsJumping == 1){
+
+                if (Player.IsJumping == true){
                     if (Player.jumpcount >= -10){
                         HomePlayer.y -= (Player.jumpcount * abs(Player.jumpcount)) * .2;
                         HomePlayer.x += 2;
@@ -36,14 +37,16 @@ int main(void)
                     else{
                         Player.jumpcount = 10;
                         HomePlayer.y = 350;
-                        Player.IsJumping = 0;
+                        Player.IsJumping = false;
                     }
                 }
+
                 if (HomePlayer.x >= 550){
-                    HomePlayer.x-=500;
+                    ResetHomePlayerState();
                 }
 
                 if (IsKeyDown(KEY_SPACE)){map.id = 2;} // Transition To The Main Game Screen
+
                 break;
         case 2:
             ClearBackground(WHITE);
@@ -52,21 +55,18 @@ int main(void)
             DrawTexture(crystal_sprite,crystal.x,380,WHITE);
 
             if (IsKeyDown(KEY_SPACE)){
-                Player.IsJumping = 1;
+                Player.IsJumping = true;
             }
 
-            if (Player.x - crystal.x <= 50 && Player.x - crystal.x >= 0 && Player.y - 380 >= -50){
-                Player.score = 0;
-                crystal.x = 500;
-                map.id = 1;
+            if (IfCrystalCollision() == true){
+                ResetGameState();
             }
 
             if (crystal.x == 0){
-                crystal.x = 500;
-                Player.score ++;
+                ResetCrytalState();
             } 
 
-            if (Player.IsJumping == 1){
+            if (Player.IsJumping == true){
                 if (Player.jumpcount >= -10){
                     Player.y -= (Player.jumpcount * abs(Player.jumpcount)) * .4;
                     Player.jumpcount -= 1;
@@ -74,9 +74,10 @@ int main(void)
                 else{
                     Player.jumpcount = 10;
                     Player.y = 380;
-                    Player.IsJumping = 0;
+                    Player.IsJumping = false;
                 }
             }
+
             MoveCrystal();
             DrawText(TextFormat("Score: %02i", Player.score), 375, 200, 20, BLACK);
             break;
