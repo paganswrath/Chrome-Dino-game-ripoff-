@@ -10,14 +10,16 @@ int main(void)
     GameInit();
     InitWindow(500,500,"CDG-Ripoff");
     SetTargetFPS(60);
-    Texture2D home_screen = LoadTexture("sprites/home_screen.png");
+    InitAudioDevice();
+    Texture2D home_screen = LoadTexture("sprites/Home_Screen.png");
     Texture2D play_screen = LoadTexture("sprites/cave_Background.png");
     Texture2D player_main = LoadTexture("sprites/dino_sprite.png");
     Texture2D player_home = LoadTexture("sprites/Home_dino.png");
     Texture2D crystal_sprite = LoadTexture("sprites/object.png");
-
+    Music music = LoadMusicStream("music/jump.mp3");
     while (!WindowShouldClose()){
         BeginDrawing();
+        UpdateMusicStream(music);
         switch (map.id)
         {      
             case 1:
@@ -45,7 +47,7 @@ int main(void)
                     ResetHomePlayerState();
                 }
 
-                if (IsKeyDown(KEY_SPACE)){map.id = 2;} // Transition To The Main Game Screen
+                if (IsKeyDown(KEY_SPACE)){map.id = 2; PlayMusicStream(music);} // Transition To The Main Game Screen
 
                 break;
         case 2:
@@ -55,6 +57,7 @@ int main(void)
             DrawTexture(crystal_sprite,crystal.x,380,WHITE);
 
             if (IsKeyDown(KEY_SPACE)){
+                 PlayMusicStream(music);
                 Player.IsJumping = true;
             }
 
@@ -74,6 +77,7 @@ int main(void)
                 else{
                     Player.jumpcount = 10;
                     Player.y = 380;
+                    StopMusicStream(music);
                     Player.IsJumping = false;
                 }
             }
