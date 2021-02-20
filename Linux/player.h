@@ -24,5 +24,5 @@ static void MoveHomePlayer(){
     HomePlayer.x += 2;
 }
 static void ResetHomePlayerState(){
-    HomePlayer.x = 500;
+    HomePlayer.x = 0;
 }
